@@ -107,12 +107,10 @@ def time_stats(df):
     print('\nCalculating The Most Frequent Times of Travel...\n')
     start_time = time.time()
 
-    # display the most common month
     popular_month = df['month'].mode()[0]
     months = {1:'January', 2:'February', 3:'March', 4: 'April', 5: 'May', 6: 'June'}
     print('\nThe most common month in this city is {}'.format(months[popular_month]))
 
-    # display the most common day of week
     popular_day = df['day_of_week'].mode()[0]
     print('\nThe most common day of the week in this city is {}'.format(popular_day))
     # display the most common start hour
@@ -191,7 +189,7 @@ def user_stats(df):
     print('-'*40)
 
 
-def display_raw_data(df):
+def show_raw_data(df):
     """ Displays original data for 5 trips at a time if the user so chooses """
     i = 0
     raw = input("\nWould you like to view individual trip data? Type 'yes' or 'no'\n").lower() # TO DO: convert the user input to lower case using lower() function
@@ -219,7 +217,7 @@ def main():
         station_stats(df)
         trip_duration_stats(df)
         user_stats(df)
-        display_raw_data(df)
+        show_raw_data(df)
 
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
