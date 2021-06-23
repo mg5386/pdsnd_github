@@ -70,25 +70,25 @@ def load_data(city, month, day):
 
     # convert the Start Time column to datetime
     df['Start Time'] = pd.to_datetime(df['Start Time'])
-    
+
     #address missing Birth Year data so we can convert to int
     if 'Birth Year' in df.columns:
         #replace missing values with most common birth year
         common_year = df['Birth Year'].mode()[0]
         df['Birth Year'].fillna(common_year, inplace=True)
         df['Birth Year'] = df['Birth Year'].astype(int)
-        
+
     # extract data from Start Time to create new columns
     df['month'] = df['Start Time'].dt.month
     df['day_of_week'] = df['Start Time'].dt.weekday_name
     df['hour'] = df['Start Time'].dt.hour
-    
+
     # filter by month if applicable
     if month != 'All':
         # use the index of the months list to get the corresponding int
         months = ['January', 'February', 'March', 'April', 'May', 'June']
         month = months.index(month) + 1
-    
+
         # filter by month to create the new dataframe
         df = df[df['month'] == month]
 
@@ -106,12 +106,12 @@ def time_stats(df):
 
     print('\nCalculating The Most Frequent Times of Travel...\n')
     start_time = time.time()
-    
+
     # TO DO: display the most common month
     popular_month = df['month'].mode()[0]
     months = {1:'January', 2:'February', 3:'March', 4: 'April', 5: 'May', 6: 'June'}
     print('\nThe most common month in this city is {}'.format(months[popular_month]))
-    
+
     # TO DO: display the most common day of week
     popular_day = df['day_of_week'].mode()[0]
     print('\nThe most common day of the week in this city is {}'.format(popular_day))
@@ -191,14 +191,14 @@ def user_stats(df):
     print('-'*40)
 
 
-def display_raw_data(df):
+def show_raw_data(df):
     """ Displays original data for 5 trips at a time if the user so chooses """
     i = 0
     raw = input("\nWould you like to view individual trip data? Type 'yes' or 'no'\n").lower() # TO DO: convert the user input to lower case using lower() function
     pd.set_option('display.max_columns',200)
     #remove the columns we had created to help calculate stats so only original trip data is shown
     df = df.iloc[:,:-4]
-    while True:            
+    while True:
         if raw == 'no':
             break
         elif raw == 'yes':
@@ -207,8 +207,8 @@ def display_raw_data(df):
             raw = input("\nWould you like to view individual trip data? Type 'yes' or 'no'\n").lower() # TO DO: convert the user input to lower case using lower() function
             i += 5
         else:
-            raw = input("\nYour input is invalid. Please enter only 'yes' or 'no'\n").lower()    
-    
+            raw = input("\nYour input is invalid. Please enter only 'yes' or 'no'\n").lower()
+
 
 def main():
     while True:
@@ -219,7 +219,7 @@ def main():
         station_stats(df)
         trip_duration_stats(df)
         user_stats(df)
-        display_raw_data(df)
+        show_raw_data(df)
 
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
